@@ -33,7 +33,6 @@ module Sorcery
           # after authentication the user is redirected to the callback defined in the provider config
           def login_at(provider, args = {})
             @provider = Config.send(provider)
-            args.each{|k,v| @provider.send("#{k.to_s}=", v)}
             if @provider.callback_url.present? && @provider.callback_url[0] == '/'
               uri = URI.parse(request.url.gsub(/\?.*$/,''))
               uri.path = ''

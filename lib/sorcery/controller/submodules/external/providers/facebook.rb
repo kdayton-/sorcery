@@ -63,11 +63,11 @@ module Sorcery
                 def has_callback?
                   true
                 end
-                
+
                 # calculates and returns the url to which the user should be redirected,
                 # to get authenticated at the external provider's site.
                 def login_url(params,session)
-                  self.authorize_url
+                  self.authorize_url.gsub!('graph.facebook.com/oauth/authorize', 'facebook.com/dialog/oauth')
                 end
                 
                 # tries to login the user from access token
@@ -77,6 +77,8 @@ module Sorcery
                   args.merge!({:code => params[:code]}) if params[:code]
                   @access_token = self.get_access_token(args, options)
                 end
+
+
                 
               end
               init
